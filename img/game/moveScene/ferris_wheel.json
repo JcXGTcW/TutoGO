@@ -1,0 +1,3 @@
+{"frames":{"ferris_wheel0.png":{"frame":{"x":0,"y":0,"w":462,"h":516},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":462,"h":516},"sourceSize":{"w":462,"h":516}},"ferris_wheel1.png":{"frame":{"x":0,"y":516,"w":462,"h":516},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":462,"h":516},"sourceSize":{"w":462,"h":516}}},
+"animations":{"loveWheel":["ferris_wheel0.png","ferris_wheel1.png"]},
+"meta":{"app":"https://github.com/piskelapp/piskel/","version":"1.0","image":"ferris_wheel.png","format":"RGBA8888","size":{"w":462,"h":1032}}}
