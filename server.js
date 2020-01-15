@@ -23,8 +23,9 @@ const mimeType = {
   '.ttf': 'aplication/font-sfnt'
 };
 
-http.createServer(function (req, res) {
-  console.log(`${req.method} ${req.url}`);
+http.createServer(function (req, res) {  
+  let t = new Date();
+  console.log(t.getHours()+':'+t.getMinutes()+':'+t.getSeconds()+` ${req.method} ${req.url}`);
 
   // parse URL
   const parsedUrl = url.parse(req.url);
