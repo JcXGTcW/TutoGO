@@ -29,6 +29,7 @@ Loader
     .add('save',"../img/game/moveScene/portal.json")
     .add('fishDead',"../img/game/fishDead/fish_lose.json")
     .add('flag',"../img/game/flag/flag.json")
+    .add('loveWheel',"../img/game/moveScene/ferris_wheel.json")
     .on("progress",loadProgressHandler)
     .load(starSkySetup)
     .load(startButtonSetup)
@@ -40,6 +41,7 @@ Loader
     .load(saveSetup)
     .load(flagSetup)
     .load(spikeSetup)
+    .load(loveWheelSetup)
     .load(setup);
 
 var alwaysOn, startPage, game, moveScene, moon, fish, logo, lastJump, lastStand, edge, left, right, 
@@ -50,7 +52,8 @@ var fishWalk    =   new AnimatedSprite.from("../img/game/fishWalk/lagi3_2.png");
 var fishFly     =   new AnimatedSprite.from("../img/game/fishFly/lagi_jump.png");
 var fishDead    =   new AnimatedSprite.from("../img/game/fishDead/fish_lose.png");
 var flag        =   new AnimatedSprite.from("../img/game/flag/flag.png")
-var spiker      =   new AnimatedSprite.from("../img/game/moveScene/grass.png");
+var spike       =   new AnimatedSprite.from("../img/game/moveScene/grass.png");
+var loveWheel   =   new AnimatedSprite.from("../img/game/moveScene/ferris_wheel.png");
 var cloud0      =   new TilingSprite(Texture.from('../img/alwaysOn/cloud0.png'),1200,780);
 var cloud1      =   new TilingSprite(Texture.from('../img/alwaysOn/cloud1.png'),1200,780);
 var road        =   new TilingSprite(Texture.from('../img/alwaysOn/road.png'),1200,120);
@@ -59,7 +62,7 @@ var grass       =   new Container(), vote = new Container(), save = new Containe
 var gameState   =   setup;
 var gravity     =   0.3, initVx = 3.5, initVy = -Math.sqrt(2*gravity*270),  xAbs = 0,
     respawnX = 180, respawnY = 540 ,respawnXAbs =0, died = 0, voteCount = 0;
-var maxStageLength = 1800, flagX = maxStageLength - 180, flagY = 120, mute = false;
+var maxStageLength = 1800, flagX = maxStageLength - 180, flagY = 120, mute = true;
 var blockX      = [  0,   0,  60, 240, 300, 300, 300, 300, 600, 660, 1080, 1260];
 var blockY      = [540, 600, 600, 420, 420, 480, 540, 600, 300, 300,  420,  420];
 var invisBlockX = [240, 900, 960, 1020, 1080, 1140];
@@ -172,6 +175,16 @@ function spikeSetup(){
     spike.gotoAndStop(1);
 }
 
+function loveWheelSetup(){
+    loveWheel = new AnimatedSprite(Resources['loveWheel'].spritesheet.animations["loveWheel"]);
+    loveWheel.animationSpeed = 0.04;
+    loveWheel.zIndex = -1;
+    loveWheel.x = 900;
+    loveWheel.y = 660-258-258;
+    loveWheel.tint = 0xEEEEEE;
+    loveWheel.play();
+}
+
 function setup() {
     t=0;
     gravity*=0.1;
@@ -241,6 +254,7 @@ function setup() {
         moveScene.addChild(flagHitbox);
         moveScene.addChild(spike);
         moveScene.addChild(tofuBlock);
+        moveScene.addChild(loveWheel);
         moveScene.sortChildren();
         //moveScene.addChild(building);
 
@@ -330,11 +344,13 @@ function play(delta) {
     for(i=0; i<grass.children.length; i++) {
         if(fishBottomHit(grass.getChildAt(i))||fishTopHit(grass.getChildAt(i))||fishLeftHit(grass.getChildAt(i))||fishRightHit(grass.getChildAt(i))){
             grass.getChildAt(i).gotoAndStop(1);
-            gameState = dead;
+            //gameState = dead;
         }
     }
     for(i=0; i<vote.children.length;i++){
         if(fishBottomHit(vote.getChildAt(i))||fishTopHit(vote.getChildAt(i))||fishLeftHit(vote.getChildAt(i))||fishRightHit(vote.getChildAt(i))){
+            if(vote.getChildAt(i).visible)    
+                playSound("../sound/fishScore.mp3");
             vote.getChildAt(i).visible = false;
             voteLine(voteCount++);
         }
@@ -466,7 +482,7 @@ function play(delta) {
         for(i=0; i<switchBlock.children.length;i++){
             if(fishBottomHit(switchBlock.getChildAt(i),fish.vy)){
                 if(!switchBlock.getChildAt(i).triggered){
-                    gameState = dead;
+                    //gameState = dead;
                     spike.x = switchBlock.getChildAt(i).x;
                     spike.y = switchBlock.getChildAt(i).y - 60;
                     spike.visible = true;
