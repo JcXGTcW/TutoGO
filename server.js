@@ -24,8 +24,7 @@ const mimeType = {
 };
 
 http.createServer(function (req, res) {
-  let t = new Date();
-  console.log(t.getHours()+':'+t.getMinutes()+':'+t.getSeconds()+` ${req.method} ${req.url}`);
+  console.log(`${req.method} ${req.url}`);
 
   // parse URL
   const parsedUrl = url.parse(req.url);
