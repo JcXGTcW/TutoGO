@@ -1,0 +1,3 @@
+{"frames":{"fish_lose0.png":{"frame":{"x":0,"y":0,"w":120,"h":60},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":120,"h":60},"sourceSize":{"w":120,"h":60}},"fish_lose1.png":{"frame":{"x":0,"y":60,"w":120,"h":60},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":120,"h":60},"sourceSize":{"w":120,"h":60}}},
+"animations":{"fishDead":["fish_lose0.png","fish_lose1.png"]},
+"meta":{"app":"https://github.com/piskelapp/piskel/","version":"1.0","image":"fish_lose.png","format":"RGBA8888","size":{"w":120,"h":120}}}

@@ -1,0 +1,33 @@
+{"frames":{
+    "lagi_jump0.png":{
+        "frame":{"x":0,"y":0,"w":107,"h":120},
+        "rotated":false,
+        "trimmed":false,
+        "spriteSourceSize":{"x":0,"y":0,"w":107,"h":120},
+        "sourceSize":{"w":107,"h":120}
+    },
+    "lagi_jump1.png":{
+        "frame":{"x":107,"y":0,"w":107,"h":120},
+        "rotated":false,
+        "trimmed":false,
+        "spriteSourceSize":{"x":0,"y":0,"w":107,"h":120},
+        "sourceSize":{"w":107,"h":120}
+    },
+    "lagi_jump2.png":{
+        "frame":{"x":0,"y":120,"w":107,"h":120},
+        "rotated":false,
+        "trimmed":false,
+        "spriteSourceSize":{"x":0,"y":0,"w":107,"h":120},
+        "sourceSize":{"w":107,"h":120}
+    }
+},
+"animations":{
+    "fishFly":["lagi_jump0.png","lagi_jump1.png","lagi_jump2.png"]
+},
+"meta":{
+    "app":"https://github.com/piskelapp/piskel/",
+    "version":"1.0",
+    "image":"lagi_jump.png",
+    "format":"RGBA8888",
+    "size":{"w":214,"h":240}
+}}

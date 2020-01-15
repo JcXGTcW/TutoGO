@@ -1,0 +1,53 @@
+{"frames":{
+    "lagi3_20.png":{
+        "frame":{"x":0,"y":0,"w":70,"h":119},
+        "rotated":false,
+        "trimmed":false,
+        "spriteSourceSize":{"x":0,"y":0,"w":70,"h":119},
+        "sourceSize":{"w":70,"h":119}
+    },
+    "lagi3_21.png":{
+        "frame":{"x":70,"y":0,"w":70,"h":119},
+        "rotated":false,
+        "trimmed":false,
+        "spriteSourceSize":{"x":0,"y":0,"w":70,"h":119},
+        "sourceSize":{"w":70,"h":119}
+    },
+    "lagi3_22.png":{
+        "frame":{"x":140,"y":0,"w":70,"h":119},
+        "rotated":false,
+        "trimmed":false,
+        "spriteSourceSize":{"x":0,"y":0,"w":70,"h":119},
+        "sourceSize":{"w":70,"h":119}
+    },
+    "lagi3_23.png":{
+        "frame":{"x":0,"y":119,"w":70,"h":119},
+        "rotated":false,"trimmed":false,
+        "spriteSourceSize":{"x":0,"y":0,"w":70,"h":119},
+        "sourceSize":{"w":70,"h":119}
+    },
+    "lagi3_24.png":{
+        "frame":{"x":70,"y":119,"w":70,"h":119},
+        "rotated":false,
+        "trimmed":false,
+        "spriteSourceSize":{"x":0,"y":0,"w":70,"h":119},
+        "sourceSize":{"w":70,"h":119}
+    },
+    "lagi3_25.png":{
+        "frame":{"x":140,"y":119,"w":70,"h":119},
+        "rotated":false,
+        "trimmed":false,
+        "spriteSourceSize":{"x":0,"y":0,"w":70,"h":119},
+        "sourceSize":{"w":70,"h":119}
+    }
+},       
+"animations":{
+    "lagi3_2":["lagi3_20.png","lagi3_21.png","lagi3_22.png","lagi3_23.png","lagi3_24.png","lagi3_25.png"]
+},
+"meta":{
+    "app":"https://github.com/piskelapp/piskel/",
+    "version":"1.0",
+    "image":"lagi3_2.png",
+    "format":"RGBA8888",
+    "size":{"w":210,"h":238}
+}}

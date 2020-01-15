@@ -1,0 +1,27 @@
+{"frames":{
+    
+"start_button0.png":{
+    "frame":{"x":0,"y":0,"w":296,"h":136},
+    "rotated":false,
+    "trimmed":false,
+    "spriteSourceSize":{"x":0,"y":0,"w":296,"h":136},
+    "sourceSize":{"w":296,"h":136}
+},
+"start_button1.png":{
+    "frame":{"x":0,"y":136,"w":296,"h":136},
+    "rotated":false,
+    "trimmed":false,
+    "spriteSourceSize":{"x":0,"y":0,"w":296,"h":136},
+    "sourceSize":{"w":296,"h":136}}
+},
+"animations": {
+	"start_button": ["start_button0.png","start_button1.png"]
+},
+"meta":{
+    "app":"https://github.com/piskelapp/piskel/",
+    "version":"1.0",
+    "image":"start_button.png",
+    "format":"RGBA8888",
+    "size":{"w":296,"h":272}
+    }
+}

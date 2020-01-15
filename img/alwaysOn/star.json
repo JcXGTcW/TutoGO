@@ -1,0 +1,25 @@
+{"frames":
+    {"star0.png":
+        {"frame":{"x":0,"y":0,"w":1200,"h":780},
+        "rotated":false,
+        "trimmed":false,
+        "spriteSourceSize":{"x":0,"y":0,"w":1200,"h":780},
+        "sourceSize":{"w":1200,"h":780}
+    },
+    "star1.png":{
+        "frame":{"x":0,"y":780,"w":1200,"h":780},
+        "rotated":false,
+        "trimmed":false,
+        "spriteSourceSize":{"x":0,"y":0,"w":1200,"h":780},
+        "sourceSize":{"w":1200,"h":780}
+    }},
+"animations":{
+    "starSky":["star0.png","star1.png"]
+},
+"meta":{
+    "app":"https://github.com/piskelapp/piskel/",
+    "version":"1.0",
+    "image":"star.png",
+    "format":"RGBA8888",
+    "size":{"w":1200,"h":1560}
+    }}
