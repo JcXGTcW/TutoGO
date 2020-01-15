@@ -23,7 +23,7 @@ const mimeType = {
   '.ttf': 'aplication/font-sfnt'
 };
 
-http.createServer(function (req, res) {
+http.createServer(function (req, res) {  
   let t = new Date();
   console.log(t.getHours()+':'+t.getMinutes()+':'+t.getSeconds()+` ${req.method} ${req.url}`);
 
