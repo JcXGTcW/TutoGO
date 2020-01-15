@@ -14,19 +14,19 @@ body {
     left: 0px;
     background-color: #FFFFFF;
     width: 100vw;
-    height: 75px;
+    height: 7vh;
     margin-right: 20px;
     box-shadow: 10px 0px 20px rgb(160, 160, 160);
 }
 #banner_title {
     position: relative;
     float: left;
-    top: 0px;
-    left: 20px;
+    top: -1vh;
+    left: 2vw;
     font-family: 'Saira Stencil One', cursive;
-    font-size: 50px;
+    font-size: 6vh;
 }
-#tuto a:link {
+#tuto A:link {
     color: #3282EC;
     text-decoration: none;
 }
@@ -35,16 +35,16 @@ body {
 #tuto {
     position: relative;
     float: left;
-    width: 110px;
+    width: auto;
     color: #3282EC;
 }
 #go {
     position: relative;
     float: left;
-    width: 100px;
+    width: auto;
     color: #F04862;
 }
-#go a:link {
+#go A:link {
     color: #F04862;
     text-decoration: none;
 }
@@ -52,13 +52,12 @@ body {
 #go A:hover {color: #F04862;}
 
 #info {
-    height: 75px;
     position: relative;
     float: right;
-    right: 35px;
-    top: 20px;
+    right: 3vw;
+    top: 2vh;
     font-family: 'Libre Barcode 128 Text', cursive;
-    font-size: 40px;
+    font-size: 4vh;
     color: #909090;
 }
 #info a:link {
@@ -69,15 +68,41 @@ body {
 #info A:hover {color: #727272;}
 
 #middle {
+    display: flex;
+    flex-wrap: wrap;
     position: fixed;
-    top: 10%;
+    top: 0;
     left: 0px;
-    width: 100%;
-    height: 90%;
+    width: 100vw;
+    height: 90vh;
 }
 #game {
-    position: relative;
-    margin: 0 auto; 
-    width: 1200px;
-    height: 780px;
+    flex: none;
+    width: 100vw;
+    height: 80vh;
+}
+#game canvas{
+    position: absolute;
+    z-index: 0;
+}
+#muteBtn {
+    position: absolute;
+    z-index: 1;
+    margin: 0.5vw;
+}
+@media (max-width: 1500px){
+    #game {
+        width: 60%;
+    }
+    #game canvas{
+        width: 100%;
+    }
+}
+@media (max-width: 750px ){
+    #game {
+        width: 60%;
+    }
+    #game canvas{
+        width: 90%;
+    }
 }

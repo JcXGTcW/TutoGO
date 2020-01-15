@@ -605,6 +605,10 @@ function muteButton(){
     mute = !mute;
     bgm.muted = mute;
     console.log(bgm.muted);
+    if(mute)
+        document.getElementById("muteBtn").src="../img/mute.png";
+    else
+        document.getElementById("muteBtn").src="../img/unmute.png";
 }
 
 function playSound(path,loop=false){
