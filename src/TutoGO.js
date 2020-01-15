@@ -344,7 +344,7 @@ function play(delta) {
     for(i=0; i<grass.children.length; i++) {
         if(fishBottomHit(grass.getChildAt(i))||fishTopHit(grass.getChildAt(i))||fishLeftHit(grass.getChildAt(i))||fishRightHit(grass.getChildAt(i))){
             grass.getChildAt(i).gotoAndStop(1);
-            //gameState = dead;
+            gameState = dead;
         }
     }
     for(i=0; i<vote.children.length;i++){
@@ -482,7 +482,7 @@ function play(delta) {
         for(i=0; i<switchBlock.children.length;i++){
             if(fishBottomHit(switchBlock.getChildAt(i),fish.vy)){
                 if(!switchBlock.getChildAt(i).triggered){
-                    //gameState = dead;
+                    gameState = dead;
                     spike.x = switchBlock.getChildAt(i).x;
                     spike.y = switchBlock.getChildAt(i).y - 60;
                     spike.visible = true;
