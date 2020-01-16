@@ -76,7 +76,7 @@ section {
 }
 
 .live_mobile_img {
-    /*background-image: url('./img/tutogo.png');*/
+    background-image: url('./img/tutogo.png');
     background: #FFFFFF;
     background-attachment: fixed;
     background-size: cover;
@@ -84,25 +84,30 @@ section {
 }
 .live_mobile_img img{
     position: fixed;
-    top: 5vh;
+    top: 20vh;
+    left: 30vw;
 }
 .g_word {
-    background: -webkit-linear-gradient(90deg,rgba(50, 131, 236, 0.5),rgba(240, 72, 97, 0.5));
-    background: -o-linear-gradient(90deg,rgba(50, 131, 236, 0.5),rgba(240, 72, 97, 0.5));
-    background: -moz-linear-gradient(90deg,rgba(50, 131, 236, 0.5),rgba(240, 72, 97, 0.5));
-    background: linear-gradient(90deg,rgba(50, 131, 236, 0.5),rgba(240, 72, 97, 0.5));
+    position: relative;
+    top: 5vh;
+    background: -webkit-linear-gradient(90deg,#8ebefd,#fda2b0);
+    background: -o-linear-gradient(90deg,#8ebefd,#fda2b0);
+    background: -moz-linear-gradient(90deg,#8ebefd,#fda2b0);
+    background: linear-gradient(90deg,#8ebefd,#fda2b0);
     background-repeat:no-repeat;
 }
 .l_word {
+    position: absolute;
+    top: 10vh;
+    left: 30vw;
     background-color: none;
     position: relative;
 }
 .r_word {
+    position: absolute;
+    top: 10vh;
+    right: 30vw;
     background-color: none;
     position: relative;
-}
-.l_word img,
-.r_word img {
-
 }
 
