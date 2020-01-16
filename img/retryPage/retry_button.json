@@ -1,0 +1,3 @@
+{"frames":{"retry_button0.png":{"frame":{"x":0,"y":0,"w":148,"h":68},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":148,"h":68},"sourceSize":{"w":148,"h":68}},"retry_button1.png":{"frame":{"x":0,"y":68,"w":148,"h":68},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":148,"h":68},"sourceSize":{"w":148,"h":68}}},
+"animations":{"retryButton":["retry_button0.png","retry_button1.png"]},
+"meta":{"app":"https://github.com/piskelapp/piskel/","version":"1.0","image":"retry_button.png","format":"RGBA8888","size":{"w":148,"h":136}}}
