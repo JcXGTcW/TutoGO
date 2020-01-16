@@ -42,6 +42,7 @@ Loader
     .load(flagSetup)
     .load(spikeSetup)
     .load(loveWheelSetup)
+    .load(fishLinesSetup)
     .load(setup);
 
 var alwaysOn, startPage, game, moveScene, moon, fish, logo, lastJump, lastStand, edge, left, right, 
@@ -62,7 +63,7 @@ var grass       =   new Container(), vote = new Container(), save = new Containe
 var gameState   =   setup;
 var gravity     =   0.3, initVx = 3.5, initVy = -Math.sqrt(2*gravity*270),  xAbs = 0,
     respawnX = 180, respawnY = 540 ,respawnXAbs =0, died = 0, voteCount = 0;
-var maxStageLength = 1800, flagX = maxStageLength - 180, flagY = 120, mute = true;
+var maxStageLength = 1800, flagX = maxStageLength - 180, flagY = 120, mute = false;
 var blockX      = [  0,   0,  60, 240, 300, 300, 300, 300, 600, 660, 1080, 1260];
 var blockY      = [540, 600, 600, 420, 420, 480, 540, 600, 300, 300,  420,  420];
 var invisBlockX = [240, 900, 960, 1020, 1080, 1140];
@@ -77,6 +78,7 @@ var voteX       = [ 60,   0, 600, 840, 1080, 1260, 1380];
 var voteY       = [  0, 480, 240, 600,  360,  180,  600];
 var saveX       = [660];
 var saveY       = [240];
+var fishLines   = [];
 
 function loadProgressHandler(loader, resource) {
     console.log("loading: " + resource.name);
@@ -183,6 +185,28 @@ function loveWheelSetup(){
     loveWheel.y = 660-258-258;
     loveWheel.tint = 0xEEEEEE;
     loveWheel.play();
+}
+
+function fishLinesSetup(){
+    let style = new PIXI.TextStyle({
+        fontWeight: 'bold',
+        fill: ['#ffffff', '#ffc6b3'],
+        stroke: '#4a1850',
+        strokeThickness: 5,
+        dropShadowColor: '#000000',
+        dropShadow: true, //開啟陰影
+        dropShadowBlur: 4, //陰影模糊
+        dropShadowAngle: Math.PI / 6, //陰影圓角
+        dropShadowDistance: 16 // 陰影距離
+    })
+    fishLines[fishLines.length] = new Text("放眼世界",style);
+    fishLines[fishLines.length-1].zIndex = 4;
+    fishLines[fishLines.length] = new Text("征服宇宙",style);
+    fishLines[fishLines.length-1].zIndex = 4;
+    fishLines[fishLines.length] = new Text("台灣安全",style);
+    fishLines[fishLines.length-1].zIndex = 4;
+    fishLines[fishLines.length] = new Text("人民有錢",style);
+    fishLines[fishLines.length-1].zIndex = 4;
 }
 
 function setup() {
@@ -333,6 +357,8 @@ function gameLoop(delta) {
 }
 
 function play(delta) {
+    fishLines[(voteCount+fishLines.length-1)%fishLines.length].x = fish.x + 150;
+    fishLines[(voteCount+fishLines.length-1)%fishLines.length].y = fish.y - 180;
     cloud0.tilePosition.x += 0.05;
     cloud1.tilePosition.x += 0.15;
     moveScene.x = - xAbs;
@@ -349,10 +375,10 @@ function play(delta) {
     }
     for(i=0; i<vote.children.length;i++){
         if(fishBottomHit(vote.getChildAt(i))||fishTopHit(vote.getChildAt(i))||fishLeftHit(vote.getChildAt(i))||fishRightHit(vote.getChildAt(i))){
-            if(vote.getChildAt(i).visible)    
-                playSound("../sound/fishScore.mp3");
-            vote.getChildAt(i).visible = false;
-            voteLine(voteCount++);
+            if(vote.getChildAt(i).visible){
+                vote.getChildAt(i).visible = false;
+                voteLine(voteCount++);
+            }
         }
     }
     for(i=0; i<save.children.length;i++){
@@ -546,6 +572,8 @@ function play(delta) {
 }
 
 function dead(delta){
+    fishLines[(voteCount+fishLines.length-1)%fishLines.length].x = fish.x + 150;
+    fishLines[(voteCount+fishLines.length-1)%fishLines.length].y = fish.y - 90;
     fishDead.visible = true;
     fishFly.visible = false;
     fishWalk.visible = false;
@@ -598,8 +626,11 @@ function win(delta){
 
 }
 function voteLine(e){
-    //put lines on stage for some time
     //play 'score' sound
+    playSound("../sound/fishScore.mp3");
+    //put lines on stage for some time
+    app.stage.removeChild(fishLines[(e-1)%fishLines.length])
+    app.stage.addChild(fishLines[e%fishLines.length]);
 }
 function muteButton(){
     mute = !mute;
