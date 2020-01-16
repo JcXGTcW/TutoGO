@@ -51,7 +51,7 @@ Loader
     .load(setup);
 
 var alwaysOn, startPage, game, moveScene, moon, fish, logo, lastJump, lastStand, edge, left, right, 
-    block, invisBlock, switchBlock, bgm, t, retryPage, flagHitbox, retryBoard, controls, paper;
+    block, invisBlock, switchBlock, bgm, t, retryPage, flagHitbox, retryBoard;
 var starSky     =   new AnimatedSprite.from("../img/alwaysOn/star.png")
 var startButton =   new AnimatedSprite.from("../img/startPage/start_button.png");
 var retryButton =   new AnimatedSprite.from("../img/retryPage/retry_button.png");
@@ -219,19 +219,19 @@ function loveWheelSetup(){
 function fishLinesSetup(){
     let style = new TextStyle({
         fontWeight: 'bold',
-        fill: '#000000',
+        fill: '#ffffff',
         stroke: '#000000',
-        strokeThickness: 1
+        strokeThickness: 3,
+        dropShadow: false, //開啟陰影
+        dropShadowColor: '#000000',
+        dropShadowBlur: 0, //陰影模糊
+        dropShadowAngle: Math.PI / 10, //陰影圓角
+        dropShadowDistance: 1 // 陰影距離
     })
     for(i=0;i<fishLinesText.length;i++) {
         fishLines[fishLines.length] = new Text(fishLinesText[i],style);
-        fishLines[fishLines.length-1].zIndex = 5;
+        fishLines[fishLines.length-1].zIndex = 4;
     }
-    paper = Sprite.from('../img/game/paper.png');
-    paper.anchor.set(0,1);
-    paper.scale.x = 0.7;
-    paper.scale.y = 0.5;
-    paper.zIndex = 4;
 }
 
 function fishFailSetup(){
@@ -239,11 +239,16 @@ function fishFailSetup(){
         fontWeight: 'bold',
         fill: '#ffffff',
         stroke: '#000000',
-        strokeThickness: 3
+        strokeThickness: 3,
+        dropShadow: false, //開啟陰影
+        dropShadowColor: '#000000',
+        dropShadowBlur: 0, //陰影模糊
+        dropShadowAngle: Math.PI / 10, //陰影圓角
+        dropShadowDistance: 1 // 陰影距離
     })
     for(i=0;i<fishFailText.length;i++){
         fishFail[fishFail.length] = new Text(fishFailText[i],style);
-        fishFail[fishFail.length-1].zIndex = 5;
+        fishFail[fishFail.length-1].zIndex = 4;
         fishFail[fishFail.length-1].anchor.set(0, 0.5);
         fishFail[fishFail.length-1].x = app.screen.width/2 - 20;
         fishFail[fishFail.length-1].y = app.screen.height/2 - 35;
@@ -286,14 +291,6 @@ function setup() {
 
     road.y = 660;
     road.zIndex = 02;
-
-    controls = Sprite.from('../img/game/controls.png');
-    controls.anchor.set(0.5,0.5);
-    controls.x = app.screen.width/2;
-    controls.y = app.screen.height/2;
-    controls.scale.x = 0.5;
-    controls.scale.y = 0.5;
-    controls.zIndex = 5;
 
     //retryPage
     retryBoard = Sprite.from('../img/retryPage/retryBoard.png');
@@ -353,7 +350,6 @@ function setup() {
     retryPage.addChild(retryButton);
     retryPage.addChild(fishCry);
     game.addChild(fish);
-    game.addChild(controls);
     game.addChild(moveScene);
         fish.addChild(fishFly);
         fish.addChild(fishWalk);
@@ -416,8 +412,6 @@ function play(delta) {
     app.stage.removeChild(retryPage);
     fishLines[(voteCount+fishLines.length-1)%fishLines.length].x = fish.x + 150;
     fishLines[(voteCount+fishLines.length-1)%fishLines.length].y = fish.y - 165;
-    paper.x = fish.x + 140;
-    paper.y = fish.y - 130;
     cloud0.tilePosition.x += 0.05;
     cloud1.tilePosition.x += 0.15;
     moveScene.x = - xAbs;
@@ -543,7 +537,6 @@ function play(delta) {
             if(!fish.enter){
                 gravity /= 0.05;
                 initVy = -Math.sqrt(2*gravity*270);
-                game.removeChild(controls);
                 fish.enter = 1;
                 window.addEventListener("keydown",downHandler);
                 window.addEventListener("keyup",upHandler);
@@ -637,8 +630,6 @@ function play(delta) {
 function dead(delta){
     fishLines[(voteCount+fishLines.length-1)%fishLines.length].x = fish.x + 120;
     fishLines[(voteCount+fishLines.length-1)%fishLines.length].y = fish.y - 90;
-    paper.x = fish.x + 110;
-    paper.y = fish.y - 55;
     fishDead.visible = true;
     fishFly.visible = false;
     fishWalk.visible = false;
@@ -700,10 +691,8 @@ function voteLine(e){
     //play 'score' sound
     playSound("../sound/fishScore.mp3");
     //put lines on stage for some time
-    game.removeChild(paper);
-    game.removeChild(fishLines[(e-1)%fishLines.length])
-    game.addChild(fishLines[e%fishLines.length]);
-    game.addChild(paper);
+    app.stage.removeChild(fishLines[(e-1)%fishLines.length])
+    app.stage.addChild(fishLines[e%fishLines.length]);
 }
 function muteButton(){
     mute = !mute;
@@ -723,7 +712,7 @@ function playSound(path,loop=false){
 }
 //keyHandlers
 function downHandler(e){
-    if(e.keyCode === 32 || e.keyCode === 38){
+    if(e.keyCode === 32){
         if(!fish.jump){
             fish.vy = initVy;
             //fish.jump = 1;

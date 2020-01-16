@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Libre+Barcode+128+Text|Press+Start+2P|Saira+Stencil+One|VT323&display=swap');
 
-BODY{
-    background-color: #FFFFFF;
-    overflow-x: hidden;
-    margin: 0%;
-    padding: 0%;
+body {
+    width:200px;
+    height:150px;
+    background: -webkit-linear-gradient(90deg,rgba(50, 131, 236, 0.5),rgba(240, 72, 97, 0.5));
+    background: -o-linear-gradient(90deg,rgba(50, 131, 236, 0.5),rgba(240, 72, 97, 0.5));
+    background: -moz-linear-gradient(90deg,rgba(50, 131, 236, 0.5),rgba(240, 72, 97, 0.5));
+    background: linear-gradient(90deg,rgba(50, 131, 236, 0.5),rgba(240, 72, 97, 0.5));
 }
 #banner {
     position: fixed;
@@ -12,18 +14,19 @@ BODY{
     left: 0px;
     background-color: #FFFFFF;
     width: 100vw;
-    height: 7vh;
+    height: 75px;
     margin-right: 20px;
+    box-shadow: 10px 0px 20px rgb(160, 160, 160);
 }
 #banner_title {
     position: relative;
     float: left;
-    top: -1vh;
-    left: 2vw;
+    top: 0px;
+    left: 20px;
     font-family: 'Saira Stencil One', cursive;
-    font-size: 6vh;
+    font-size: 50px;
 }
-#tuto A:link {
+#tuto a:link {
     color: #3282EC;
     text-decoration: none;
 }
@@ -32,16 +35,16 @@ BODY{
 #tuto {
     position: relative;
     float: left;
-    width: auto;
+    width: 110px;
     color: #3282EC;
 }
 #go {
     position: relative;
     float: left;
-    width: auto;
+    width: 100px;
     color: #F04862;
 }
-#go A:link {
+#go a:link {
     color: #F04862;
     text-decoration: none;
 }
@@ -49,60 +52,35 @@ BODY{
 #go A:hover {color: #F04862;}
 
 #info {
+    height: 75px;
     position: relative;
     float: right;
-    right: 3vw;
-    top: 1vh;
+    right: 35px;
+    top: 15px;
     font-family: 'VT323', monospace;
-    font-size: 4vh;
+    font-size: 40px;
     color: #909090;
 }
-#info A:link {
+#info a:link {
     color: #909090;
     text-decoration: none;
 }
 #info A:visited {color: #909090;}
 #info A:hover {color: #727272;}
 
-
-section {
-    height: 100vh;
-    background: #FFFFFF;
-    color: #FFFFFF;
-    /*line-height: 100vh;*/
-    font-family: 'VT323', monospace;
-    text-align: center;
-    font-size: 5vh;
-}
-
-.live_mobile_img {
-    /*background-image: url('./img/tutogo.png');*/
-    background: #FFFFFF;
-    background-attachment: fixed;
-    background-size: cover;
-    background-position: center center;
-}
-.live_mobile_img img{
+#middle {
     position: fixed;
-    top: 5vh;
+    top: 15%;
+    left: 0px;
+    width: 100%;
+    height: 75%;
 }
-.g_word {
-    background: -webkit-linear-gradient(90deg,rgba(50, 131, 236, 0.5),rgba(240, 72, 97, 0.5));
-    background: -o-linear-gradient(90deg,rgba(50, 131, 236, 0.5),rgba(240, 72, 97, 0.5));
-    background: -moz-linear-gradient(90deg,rgba(50, 131, 236, 0.5),rgba(240, 72, 97, 0.5));
-    background: linear-gradient(90deg,rgba(50, 131, 236, 0.5),rgba(240, 72, 97, 0.5));
-    background-repeat:no-repeat;
-}
-.l_word {
-    background-color: none;
+#game {
     position: relative;
+    margin: 0 auto; 
+    width: 1200px;
+    height: 780px;
 }
-.r_word {
-    background-color: none;
-    position: relative;
+#YT{
+    text-align: center;
 }
-.l_word img,
-.r_word img {
-
-}
-
