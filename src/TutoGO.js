@@ -21,7 +21,9 @@ document.getElementById("game").appendChild(app.view);
 
 Loader
     .add('starSky',"../img/alwaysOn/star.json")
-    .add('startButton',"../img/startPage/start_button/start_button.json")
+    .add('startButton',"../img/startPage/start_button.json")
+    .add('retryButton',"../img/retryPage/retry_button.json")
+    .add('fishCry',"../img/retryPage/fish_cry.json")
     .add('fishWalk',"../img/game/fishWalk/lagi3_2.json")
     .add('fishFly',"../img/game/fishFly/lagi_jump.json")
     .add('grass',"../img/game/moveScene/grass.json")
@@ -33,6 +35,8 @@ Loader
     .on("progress",loadProgressHandler)
     .load(starSkySetup)
     .load(startButtonSetup)
+    .load(retryButtonSetup)
+    .load(fishCrySetup)
     .load(fishWalkSetup)
     .load(fishFlySetup)
     .load(fishDeadSetup)
@@ -42,12 +46,16 @@ Loader
     .load(flagSetup)
     .load(spikeSetup)
     .load(loveWheelSetup)
+    .load(fishLinesSetup)
+    .load(fishFailSetup)
     .load(setup);
 
 var alwaysOn, startPage, game, moveScene, moon, fish, logo, lastJump, lastStand, edge, left, right, 
-    block, invisBlock, switchBlock, bgm, t, retryPage, flagHitbox;
+    block, invisBlock, switchBlock, bgm, t, retryPage, flagHitbox, retryBoard;
 var starSky     =   new AnimatedSprite.from("../img/alwaysOn/star.png")
-var startButton =   new AnimatedSprite.from("../img/startPage/start_button/start_button.png");
+var startButton =   new AnimatedSprite.from("../img/startPage/start_button.png");
+var retryButton =   new AnimatedSprite.from("../img/retryPage/retry_button.png");
+var fishCry     =   new AnimatedSprite.from("../img/retryPage/fish_cry.png");
 var fishWalk    =   new AnimatedSprite.from("../img/game/fishWalk/lagi3_2.png");
 var fishFly     =   new AnimatedSprite.from("../img/game/fishFly/lagi_jump.png");
 var fishDead    =   new AnimatedSprite.from("../img/game/fishDead/fish_lose.png");
@@ -61,8 +69,8 @@ var origin      =   new PIXI.Point(0,0);
 var grass       =   new Container(), vote = new Container(), save = new Container(), tofuBlock = new Container;
 var gameState   =   setup;
 var gravity     =   0.3, initVx = 3.5, initVy = -Math.sqrt(2*gravity*270),  xAbs = 0,
-    respawnX = 180, respawnY = 540 ,respawnXAbs =0, died = 0, voteCount = 0;
-var maxStageLength = 1800, flagX = maxStageLength - 180, flagY = 120, mute = true;
+    respawnX = 180, respawnY = 540 ,respawnXAbs =0, died = 0, voteCount = 0, fishFailCount = 0;
+var maxStageLength = 1800, flagX = maxStageLength - 180, flagY = 120, mute = false;
 var blockX      = [  0,   0,  60, 240, 300, 300, 300, 300, 600, 660, 1080, 1260];
 var blockY      = [540, 600, 600, 420, 420, 480, 540, 600, 300, 300,  420,  420];
 var invisBlockX = [240, 900, 960, 1020, 1080, 1140];
@@ -77,6 +85,10 @@ var voteX       = [ 60,   0, 600, 840, 1080, 1260, 1380];
 var voteY       = [  0, 480, 240, 600,  360,  180,  600];
 var saveX       = [660];
 var saveY       = [240];
+var fishLines   = [];
+var fishLinesText = ["立足台灣","胸懷大陸","放眼世界","征服宇宙","台灣安全","人民有錢","高雄發大財"];
+var fishFail    = [];
+var fishFailText = ["我...\n還沒挖到石油","總統府...\n我會回來的","我沒有遲到\n是終點走錯了"];  
 
 function loadProgressHandler(loader, resource) {
     console.log("loading: " + resource.name);
@@ -98,6 +110,25 @@ function startButtonSetup(){
     startButton.x = app.screen.width*0.5;
     startButton.y = app.screen.height*0.7;
     startButton.zIndex = 20;
+}
+function retryButtonSetup(){
+    retryButton = new AnimatedSprite(Resources['retryButton'].spritesheet.animations["retryButton"]);
+    retryButton.interactive = true;
+    retryButton.buttonMode = true;
+    retryButton.anchor.set(0.5,0.5);
+    retryButton.x = app.screen.width*0.55;
+    retryButton.y = app.screen.height*0.58;
+    retryButton.zIndex = 2;
+}
+
+function fishCrySetup(){
+    fishCry = new AnimatedSprite(Resources['fishCry'].spritesheet.animations["fishCry"]);
+    fishCry.animationSpeed = 0.03;
+    fishCry.anchor.set(1,0.5);
+    fishCry.x = app.screen.width/2 - 40;
+    fishCry.y = app.screen.height/2;
+    fishCry.zIndex = 3;
+    fishCry.play();
 }
 
 function fishWalkSetup(){
@@ -185,6 +216,45 @@ function loveWheelSetup(){
     loveWheel.play();
 }
 
+function fishLinesSetup(){
+    let style = new TextStyle({
+        fontWeight: 'bold',
+        fill: '#ffffff',
+        stroke: '#000000',
+        strokeThickness: 3,
+        dropShadow: false, //開啟陰影
+        dropShadowColor: '#000000',
+        dropShadowBlur: 0, //陰影模糊
+        dropShadowAngle: Math.PI / 10, //陰影圓角
+        dropShadowDistance: 1 // 陰影距離
+    })
+    for(i=0;i<fishLinesText.length;i++) {
+        fishLines[fishLines.length] = new Text(fishLinesText[i],style);
+        fishLines[fishLines.length-1].zIndex = 4;
+    }
+}
+
+function fishFailSetup(){
+    let style = new TextStyle({
+        fontWeight: 'bold',
+        fill: '#ffffff',
+        stroke: '#000000',
+        strokeThickness: 3,
+        dropShadow: false, //開啟陰影
+        dropShadowColor: '#000000',
+        dropShadowBlur: 0, //陰影模糊
+        dropShadowAngle: Math.PI / 10, //陰影圓角
+        dropShadowDistance: 1 // 陰影距離
+    })
+    for(i=0;i<fishFailText.length;i++){
+        fishFail[fishFail.length] = new Text(fishFailText[i],style);
+        fishFail[fishFail.length-1].zIndex = 4;
+        fishFail[fishFail.length-1].anchor.set(0, 0.5);
+        fishFail[fishFail.length-1].x = app.screen.width/2 - 20;
+        fishFail[fishFail.length-1].y = app.screen.height/2 - 35;
+    }
+}
+
 function setup() {
     t=0;
     gravity*=0.1;
@@ -201,7 +271,8 @@ function setup() {
             building =  new Container();
     alwaysOn.zIndex = 1;
     startPage.zIndex = 2;
-    retryPage.zIndex = 2;
+    retryPage.zIndex = 4;
+    building.zIndex = -1;
     game.zIndex = 3;
         moveScene.zIndex = 1;
         fish.zIndex = 2;
@@ -213,13 +284,21 @@ function setup() {
     cloud1.zIndex = 4;
     
     //startPage
-    logo = Sprite.from('../img/startPage/tutogo/tutogo.png')
+    logo = Sprite.from('../img/startPage/tutogo.png');
     logo.anchor.set(0.5,0.5);
     logo.x = app.screen.width*0.5;
     logo.y = app.screen.height*0.3;
 
     road.y = 660;
     road.zIndex = 02;
+
+    //retryPage
+    retryBoard = Sprite.from('../img/retryPage/retryBoard.png');
+    retryBoard.anchor.set(0.5,0.5);
+    retryBoard.x = app.screen.width/2;
+    retryBoard.y = app.screen.height/2;
+    retryBoard.scale.x = 1.2;
+    retryBoard.scale.y = 1.2;
 
     //game.fish
     fish.vx=0;
@@ -233,11 +312,43 @@ function setup() {
     flagHitbox.x = flagX;
     flagHitbox.y = flagY;
     flagHitbox.name = 'flagHitbox';
+
+    
+    for(i=0;i<blockX.length;i++){
+        let block_temp = new Sprite.from("../img/game/moveScene/block.png");
+        block_temp.x = blockX[i];
+        block_temp.y = blockY[i];
+        block.addChild(block_temp);
+    }
+    for(i=0;i<invisBlockX.length;i++){
+        let invis_temp = new Sprite.from("../img/game/moveScene/block.png");
+        invis_temp.x = invisBlockX[i];
+        invis_temp.y = invisBlockY[i];
+        invis_temp.visible = false;
+        invisBlock.addChild(invis_temp);
+    }
+    for(i=0;i<switchBlockX.length;i++){
+        let switch_temp = new Sprite.from("../img/game/moveScene/block.png");
+        switch_temp.x = switchBlockX[i];
+        switch_temp.y = switchBlockY[i];
+        switch_temp.triggered = false;
+        switchBlock.addChild(switch_temp);
+    }
+    for(i=0;i<tofuBlockX.length;i++){
+        let tofuBlock_temp = new Sprite.from("../img/game/moveScene/block.png");
+        tofuBlock_temp.x = tofuBlockX[i];
+        tofuBlock_temp.y = tofuBlockY[i];
+        tofuBlock.addChild(tofuBlock_temp);
+    }
     
     alwaysOn.addChild(starSky);
     startPage.addChild(logo);
     startPage.addChild(road);
     startPage.addChild(startButton);
+    retryPage.addChild(retryBoard);
+    retryPage.addChild(fishFail[fishFailCount]);
+    retryPage.addChild(retryButton);
+    retryPage.addChild(fishCry);
     game.addChild(fish);
     game.addChild(moveScene);
         fish.addChild(fishFly);
@@ -247,48 +358,16 @@ function setup() {
         moveScene.addChild(block);
         moveScene.addChild(invisBlock);
         moveScene.addChild(switchBlock);
+        moveScene.addChild(tofuBlock);
         moveScene.addChild(grass);
         moveScene.addChild(vote);
         moveScene.addChild(save);
         moveScene.addChild(flag);
         moveScene.addChild(flagHitbox);
         moveScene.addChild(spike);
-        moveScene.addChild(tofuBlock);
-        moveScene.addChild(loveWheel);
+        moveScene.addChild(building);
         moveScene.sortChildren();
-        //moveScene.addChild(building);
-
-
-
-        for(i=0;i<blockX.length;i++){
-            let block_temp = new Sprite.from("../img/game/moveScene/block.png");
-            block_temp.x = blockX[i];
-            block_temp.y = blockY[i];
-            block.addChild(block_temp);
-        }
-        for(i=0;i<invisBlockX.length;i++){
-            let invis_temp = new Sprite.from("../img/game/moveScene/block.png");
-            invis_temp.x = invisBlockX[i];
-            invis_temp.y = invisBlockY[i];
-            invis_temp.visible = false;
-            invisBlock.addChild(invis_temp);
-        }
-        for(i=0;i<switchBlockX.length;i++){
-            let switch_temp = new Sprite.from("../img/game/moveScene/block.png");
-            switch_temp.x = switchBlockX[i];
-            switch_temp.y = switchBlockY[i];
-            switch_temp.triggered = false;
-            switchBlock.addChild(switch_temp);
-        }
-        for(i=0;i<tofuBlockX.length;i++){
-            let tofuBlock_temp = new Sprite.from("../img/game/moveScene/block.png");
-            tofuBlock_temp.x = tofuBlockX[i];
-            tofuBlock_temp.y = tofuBlockY[i];
-            tofuBlock.addChild(tofuBlock_temp);
-        }
-
-            //building.addChild(/*some buildings*/);
-    //playSound("../sound/backgroundMusic.mp3",true);
+            building.addChild(loveWheel);
     
     bgm = new Audio("../sound/backgroundMusic.mp3");
     bgm.loop = true;
@@ -299,9 +378,7 @@ function setup() {
     app.stage.addChild(alwaysOn);
     app.stage.addChild(startPage);
     app.stage.sortChildren();
-    for (var i = 0; i <moveScene.children.length; i++){
-        console.log(moveScene.children[i].name+'\'s zIndex:'+moveScene.children[i].zIndex);
-    }
+    
     startButton.on('pointerdown',function(){
         startButton.gotoAndStop(1);}); 
     startButton.on('pointerup',function(){
@@ -329,30 +406,34 @@ function gameLoop(delta) {
         gameState(delta);
         t=0;
     }
-    //console.log(delta);
 }
 
 function play(delta) {
+    app.stage.removeChild(retryPage);
+    fishLines[(voteCount+fishLines.length-1)%fishLines.length].x = fish.x + 150;
+    fishLines[(voteCount+fishLines.length-1)%fishLines.length].y = fish.y - 165;
     cloud0.tilePosition.x += 0.05;
     cloud1.tilePosition.x += 0.15;
     moveScene.x = - xAbs;
     let noHorizontal = 0, noVertical = 0;
     if(fishBottomHit(flagHitbox)||fishTopHit(flagHitbox)||fishLeftHit(flagHitbox)||fishRightHit(flagHitbox)){
+        //voteLine(voteCount++);
         gameState = win;
         console.log("win");
     }
     for(i=0; i<grass.children.length; i++) {
         if(fishBottomHit(grass.getChildAt(i))||fishTopHit(grass.getChildAt(i))||fishLeftHit(grass.getChildAt(i))||fishRightHit(grass.getChildAt(i))){
             grass.getChildAt(i).gotoAndStop(1);
+            fishFailCount++;
             gameState = dead;
         }
     }
     for(i=0; i<vote.children.length;i++){
         if(fishBottomHit(vote.getChildAt(i))||fishTopHit(vote.getChildAt(i))||fishLeftHit(vote.getChildAt(i))||fishRightHit(vote.getChildAt(i))){
-            if(vote.getChildAt(i).visible)    
-                playSound("../sound/fishScore.mp3");
-            vote.getChildAt(i).visible = false;
-            voteLine(voteCount++);
+            if(vote.getChildAt(i).visible){
+                vote.getChildAt(i).visible = false;
+                voteLine(voteCount++);
+            }
         }
     }
     for(i=0; i<save.children.length;i++){
@@ -482,6 +563,7 @@ function play(delta) {
         for(i=0; i<switchBlock.children.length;i++){
             if(fishBottomHit(switchBlock.getChildAt(i),fish.vy)){
                 if(!switchBlock.getChildAt(i).triggered){
+                    fishFailCount++;
                     gameState = dead;
                     spike.x = switchBlock.getChildAt(i).x;
                     spike.y = switchBlock.getChildAt(i).y - 60;
@@ -546,6 +628,8 @@ function play(delta) {
 }
 
 function dead(delta){
+    fishLines[(voteCount+fishLines.length-1)%fishLines.length].x = fish.x + 120;
+    fishLines[(voteCount+fishLines.length-1)%fishLines.length].y = fish.y - 90;
     fishDead.visible = true;
     fishFly.visible = false;
     fishWalk.visible = false;
@@ -557,23 +641,29 @@ function dead(delta){
     fish.y += fish.vy;
     died++;
     if(died>150){
+        app.stage.addChild(retryPage);
         gameState = respawn;
         died = 0;
     }
     //console.log(died);
 }
 function respawn(delta){
-    resetTraps();
-    died = 0;
-    fish.x = respawnX-180;
-    fish.y = respawnY;
-    fish.vx = 0;
-    fish.vy = 0;
-    fishDead.visible = false;
-    fishWalk.visible = true;
-    fishWalk.gotoAndStop(2);
-    xAbs = respawnXAbs;
-    gameState = play;
+    retryButton.on('pointerdown',function(){
+        retryButton.gotoAndStop(1);}); 
+    retryButton.on('pointerup',function(){
+        resetTraps();
+        retryPage.removeChild(fishFail[(fishFailCount-1)%fishFailText.length]);
+        retryPage.addChild(fishFail[fishFailCount%fishFailText.length]);
+        died = 0;
+        fish.x = respawnX-180;
+        fish.y = respawnY;
+        fish.vx = 0;
+        fish.vy = 0;
+        fishDead.visible = false;
+        fishWalk.visible = true;
+        fishWalk.gotoAndStop(2);
+        xAbs = respawnXAbs;
+        gameState = play;});
 }
 function resetTraps(){
     for(i = 0; i < invisBlock.children.length; i++){
@@ -598,8 +688,11 @@ function win(delta){
 
 }
 function voteLine(e){
-    //put lines on stage for some time
     //play 'score' sound
+    playSound("../sound/fishScore.mp3");
+    //put lines on stage for some time
+    app.stage.removeChild(fishLines[(e-1)%fishLines.length])
+    app.stage.addChild(fishLines[e%fishLines.length]);
 }
 function muteButton(){
     mute = !mute;
