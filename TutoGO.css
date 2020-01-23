@@ -61,8 +61,8 @@ body {
     position: relative;
     float: right;
     right: 3vw;
-    top: 1vh;
-    font-family: 'VT323', monospace;
+    top: 2vh;
+    font-family: 'Libre Barcode 128 Text', cursive;
     font-size: 4vh;
     color: #909090;
 }
@@ -85,7 +85,7 @@ body {
 #game {
     position: relative;
     left: 50%;
-    margin-left: -31.25%;
+    margin-left: -31%;
     width: 100%;
     height: 100%;
 }
@@ -105,24 +105,25 @@ body {
     width: 16px;
     height: 16px;
 }
-@media (max-width: 1900px){
+@media (max-width: 1500px){
     #game {
-        width: 62.5%;
+        width: 60%;
     }
     #game canvas{
         width: 100%;
     }
 }
-
-#counter {
-    position: absolute;
-    bottom: 10vh;
-    right: 3vw;
-    z-index: 3;
+@media (max-width: 750px ){
+    #game {
+        width: 60%;
+    }
+    #game canvas{
+        width: 90%;
+    }
 }
+
 #share {
     position: absolute;
-    top: 35vh;
     z-index: 3;
 }
 .resp-sharing-button__link,
@@ -139,7 +140,7 @@ body {
 .resp-sharing-button {
   border-radius: 5px;
   transition: 25ms ease-out;
-  padding: 0.75em 0.75em;
+  padding: 0.5em 0.75em;
   font-family: Helvetica Neue,Helvetica,Arial,sans-serif
 }
 
@@ -147,34 +148,88 @@ body {
   width: 1em;
   height: 1em;
   margin-right: 0.4em;
-  vertical-align: top;
+  vertical-align: top
 }
 
 .resp-sharing-button--small svg {
   margin: 0;
-  vertical-align: middle;
+  vertical-align: middle
 }
 
 /* Non solid icons get a stroke */
 .resp-sharing-button__icon {
   stroke: #fff;
-  fill: none;
+  fill: none
 }
 
 /* Solid icons get a fill */
 .resp-sharing-button__icon--solid,
 .resp-sharing-button__icon--solidcircle {
   fill: #fff;
-  stroke: none;
+  stroke: none
 }
 
-.resp-sharing-button--style {
+.resp-sharing-button--twitter {
+  background-color: #55acee
+}
+
+.resp-sharing-button--twitter:hover {
+  background-color: #2795e9
+}
+
+.resp-sharing-button--facebook {
+  background-color: #3b5998
+}
+
+.resp-sharing-button--facebook:hover {
+  background-color: #2d4373
+}
+
+.resp-sharing-button--tumblr {
+  background-color: #35465C
+}
+
+.resp-sharing-button--tumblr:hover {
+  background-color: #222d3c
+}
+
+
+.resp-sharing-button--facebook {
+  background-color: #3b5998;
+  border-color: #3b5998;
+}
+
+.resp-sharing-button--facebook:hover,
+.resp-sharing-button--facebook:active {
+  background-color: #2d4373;
+  border-color: #2d4373;
+}
+
+.resp-sharing-button--twitter {
   background-color: rgba(255, 255, 255, 0.3);
   border-color: rgba(255, 255, 255, 0.3);
 }
 
-.resp-sharing-button--style:hover,
-.resp-sharing-button--style:active {
+.resp-sharing-button--twitter:hover,
+.resp-sharing-button--twitter:active {
     background-color: rgba(255, 255, 255, 0.2);
     border-color: rgba(255, 255, 255, 0.2);
 }
+
+.resp-sharing-button--tumblr {
+  background-color: #35465C;
+  border-color: #35465C;
+}
+
+.resp-sharing-button--tumblr:hover,
+.resp-sharing-button--tumblr:active {
+  background-color: #222d3c;
+  border-color: #222d3c;
+}
+
+.resp-sharing-button--telegram {
+  background-color: #54A9EB;
+}
+
+.resp-sharing-button--telegram:hover {
+  background-color: #4B97D1;}
